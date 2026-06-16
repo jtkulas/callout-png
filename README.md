@@ -10,12 +10,7 @@ These image specifications supplant the [native & hacked bootstrap icon options]
 
 The extension is named `callout-png` because the .png format is known to support transparency (images with transparent backgrounds will return the most visually appealing results). Some format types may not be well--suited for all document types (for example .svg images within typst-- or $\LaTeX$--specified pdfs).
 
-
-::: {.callout-note}
-
-Native images should be used with typst and traditional pdf document types (url image--grabbing is not supported with `format: typst` or `format: pdf`).
-
-:::
+>Native images should be used with typst and traditional pdf document types (url image--grabbing is not supported with `format: typst` or `format: pdf`).
 
 ## Installing
 
