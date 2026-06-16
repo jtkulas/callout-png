@@ -1,0 +1,53 @@
+---
+title: "Test File"
+format: html
+#mainfont: Times New Roman
+filters:
+  - callout-png   
+---
+
+Some examples with heading levels specified (`##`) only for easier RevealJS navigation. You should be able to test all 4 formats by replacing the `html` on line #3 with `revealjs`, `typst`, or `pdf`. There will be differences in callout appearance across the 4 format specifications (sometimes slight, sometimes more noticeable -- priority was given to the html renderings when creating this capability. Submit an issue if you find something exceptionally annoying.
+
+::: {.callout-png}
+Default specifications
+:::
+
+##
+
+:::{.callout-png  title=""}
+Nothing to see here... (overriding default title with empty space)
+:::
+
+##
+
+::: {.callout-png title="Small and tight" image-height="1.5em" header-vpad="0em"}
+Smaller image (`image-height="1.5em"`) and tighter banner (`header-vpad="0em"`) 
+:::
+
+##
+
+::: {.callout-png title="Different Color" color="#69c4d6" image="images/pink-panther.png" image-height="8em" header-vpad="1em"}
+Blue(ish; `color="#69c4d6"`) with local image (same as default), huge image size (`image-height="8em"`) and wider banner relative to image (`header-vpad="1em"`)
+:::
+
+##
+
+::: {.callout-png title="This is BIGGER snoopy" color="#c9c9c3" image="images/snoopylocal.png" header-vpad="1em" image-height="8em"}
+
+  + local image location  
+  + color=grey  
+  + height=8em  
+  + vertical padding=1em
+  
+:::
+
+##
+
+::: {.callout-png title="This is smaller snoopy" color="#cb6ed4" image="images/snoopylocal.png" header-vpad=".5em" image-height="3em"}
+
+with a GIANT snoopy to make up for it!!!
+
+![](images/snoopylocal.png)
+
+:::
+
