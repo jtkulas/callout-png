@@ -76,31 +76,47 @@ local function get_ext_dir()
   return dir or "."
 end
 
-local function resolve_image_path(image_url)
-  -- If it's a URL or absolute path, return as-is
+local function normalize_path(path)
+  -- Convert backslashes to forward slashes for consistency
+  return path:gsub("\\", "/")
+end
+
+local function to_absolute_path(path)
+  -- If already absolute, normalize and return
+  if path:match("^/") or path:match("^[a-zA-Z]:") then
+    return normalize_path(path)
+  end
+  
+  -- Try relative to current working directory first
+  if file_exists(path) then
+    return normalize_path(path)
+  end
+  
+  -- Try extension directory
+  local ext_dir = get_ext_dir()
+  local ext_image_path = ext_dir .. "/images/" .. path:match("([^/\\]+)$")
+  if file_exists(ext_image_path) then
+    return normalize_path(ext_image_path)
+  end
+  
+  -- Return normalized original path as fallback
+  return normalize_path(path)
+end
+
+local function resolve_image_path(image_url, format)
+  -- If it's a URL, return as-is
   if is_url(image_url) then
     return image_url
   end
   
-  -- If it starts with a / or drive letter (Windows), it's absolute
-  if image_url:match("^/") or image_url:match("^[a-zA-Z]:") then
-    return image_url
+  local resolved = to_absolute_path(image_url)
+  
+  -- For LaTeX, escape backslashes
+  if format == "latex" then
+    resolved = resolved:gsub("\\", "/")
   end
   
-  -- Check if image exists relative to project (user-provided image)
-  if file_exists(image_url) then
-    return image_url
-  end
-  
-  -- Otherwise, resolve relative to extension directory
-  local ext_dir = get_ext_dir()
-  local ext_image_path = ext_dir .. "/images/" .. image_url:match("([^/]+)$")
-  if file_exists(ext_image_path) then
-    return ext_image_path
-  end
-  
-  -- Fallback: still try the original path (will fail gracefully in output)
-  return image_url
+  return resolved
 end
 
 return {
@@ -133,10 +149,10 @@ return {
       end
       title = protect_tex_names(title)
 
-      -- Resolve image path for output formats that support local files
-      local resolved_image = resolve_image_path(image_url)
-
       if is_html_output() then
+        -- For HTML, use absolute path
+        local resolved_image = resolve_image_path(image_url, "html")
+        
         local icon_html = string.format(
           '<img src="%s" class="callout-png-icon" style="height: %s; width: auto; max-width: 100%%; margin: 0 0.6em 0 0; vertical-align: middle; object-fit: contain;">',
           resolved_image, image_height
@@ -168,6 +184,8 @@ return {
       elseif FORMAT == "latex" then
         quarto.doc.include_text("in-header", "\\usepackage{tcolorbox}\n\\tcbuselibrary{skins}")
 
+        -- For LaTeX, resolve and escape path
+        local resolved_image = resolve_image_path(image_url, "latex")
         local icon_latex = string.format("\\includegraphics[height=%s]{%s}", image_height, resolved_image)
 
         local color_name  = "calloutcolor" .. tostring(os.time() + math.random(10000))
@@ -230,6 +248,8 @@ return {
         return pandoc.Div(blocks)
 
       elseif FORMAT == "typst" then
+        local resolved_image = resolve_image_path(image_url, "typst")
+        
         local icon_typst
         if is_url(resolved_image) then
           icon_typst = '🖼️'
