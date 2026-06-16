@@ -50,6 +50,33 @@ local function get_image_width_em(image_height_str)
   return math.max(2.8, math.min(width_em, 21))
 end
 
+local function resolve_image_path(image_url)
+  -- If it's a URL or absolute path, return as-is
+  if is_url(image_url) then
+    return image_url
+  end
+  
+  -- If it starts with a /, it's absolute
+  if image_url:match("^/") then
+    return image_url
+  end
+  
+  -- Check if image exists relative to project (user-provided image)
+  if pandoc.system.file_exists(image_url) then
+    return image_url
+  end
+  
+  -- Otherwise, resolve relative to extension directory
+  local ext_dir = quarto.extension.directory()
+  local ext_image_path = ext_dir .. "/images/" .. image_url:match("([^/]+)$")
+  if pandoc.system.file_exists(ext_image_path) then
+    return ext_image_path
+  end
+  
+  -- Fallback: still try the original path (will fail gracefully in output)
+  return image_url
+end
+
 return {
   { Meta = Meta },
 
@@ -61,7 +88,7 @@ return {
 
       local title       = pandoc.utils.stringify(div.attributes.title or "Pinktacular Callout")
       local color       = pandoc.utils.stringify(div.attributes.color or "#ff99ff")
-      local image_url   = pandoc.utils.stringify(div.attributes.image or "images/pink-panther.png")
+      local image_url   = pandoc.utils.stringify(div.attributes.image or "pink-panther.png")
       local image_height = pandoc.utils.stringify(div.attributes["image-height"] or "4.8em")
       local header_vpad = pandoc.utils.stringify(div.attributes["header-vpad"] or "0em")
 
@@ -80,10 +107,13 @@ return {
       end
       title = protect_tex_names(title)
 
+      -- Resolve image path for output formats that support local files
+      local resolved_image = resolve_image_path(image_url)
+
       if is_html_output() then
         local icon_html = string.format(
           '<img src="%s" class="callout-png-icon" style="height: %s; width: auto; max-width: 100%%; margin: 0 0.6em 0 0; vertical-align: middle; object-fit: contain;">',
-          image_url, image_height
+          resolved_image, image_height
         )
 
         local header = pandoc.Div({
@@ -112,7 +142,7 @@ return {
       elseif FORMAT == "latex" then
         quarto.doc.include_text("in-header", "\\usepackage{tcolorbox}\n\\tcbuselibrary{skins}")
 
-        local icon_latex = string.format("\\includegraphics[height=%s]{%s}", image_height, image_url)
+        local icon_latex = string.format("\\includegraphics[height=%s]{%s}", image_height, resolved_image)
 
         local color_name  = "calloutcolor" .. tostring(os.time() + math.random(10000))
         local border_name = "calloutborder" .. tostring(os.time() + math.random(10000))
@@ -175,11 +205,11 @@ return {
 
       elseif FORMAT == "typst" then
         local icon_typst
-        if is_url(image_url) then
+        if is_url(resolved_image) then
           icon_typst = '🖼️'
         else
           icon_typst = '#box(height: ' .. image_height .. ', align(horizon)[#image("' .. 
-                       image_url .. '", height: ' .. image_height .. ')])'
+                       resolved_image .. '", height: ' .. image_height .. ')])'
         end
 
         local vpad = header_vpad
