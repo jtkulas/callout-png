@@ -47,7 +47,7 @@ Blue(ish; `color="#69c4d6"`) with bundled image (pink-panther.png), huge image s
 
 with a GIANT snoopy to make up for it!!!
 
-![](images/snoopylocal.png)
+![](_extensions/jtkulas/callout-png/images/snoopylocal.png)
 
 :::
 
