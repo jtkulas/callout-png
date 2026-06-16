@@ -59,14 +59,31 @@ local function file_exists(path)
   return false
 end
 
+local function get_ext_dir()
+  -- Try to get from quarto if available
+  if quarto and quarto.extension and quarto.extension.directory then
+    return quarto.extension.directory()
+  end
+  
+  -- Fallback: use debug.getinfo to find the script location
+  local script_path = debug.getinfo(1).source
+  if script_path:sub(1, 1) == "@" then
+    script_path = script_path:sub(2)
+  end
+  
+  -- Extract directory from script path
+  local dir = script_path:match("(.*)[/\\]")
+  return dir or "."
+end
+
 local function resolve_image_path(image_url)
   -- If it's a URL or absolute path, return as-is
   if is_url(image_url) then
     return image_url
   end
   
-  -- If it starts with a /, it's absolute
-  if image_url:match("^/") then
+  -- If it starts with a / or drive letter (Windows), it's absolute
+  if image_url:match("^/") or image_url:match("^[a-zA-Z]:") then
     return image_url
   end
   
@@ -76,7 +93,7 @@ local function resolve_image_path(image_url)
   end
   
   -- Otherwise, resolve relative to extension directory
-  local ext_dir = quarto.extension.directory()
+  local ext_dir = get_ext_dir()
   local ext_image_path = ext_dir .. "/images/" .. image_url:match("([^/]+)$")
   if file_exists(ext_image_path) then
     return ext_image_path
