@@ -50,6 +50,15 @@ local function get_image_width_em(image_height_str)
   return math.max(2.8, math.min(width_em, 21))
 end
 
+local function file_exists(path)
+  local f = io.open(path, "r")
+  if f then
+    io.close(f)
+    return true
+  end
+  return false
+end
+
 local function resolve_image_path(image_url)
   -- If it's a URL or absolute path, return as-is
   if is_url(image_url) then
@@ -62,14 +71,14 @@ local function resolve_image_path(image_url)
   end
   
   -- Check if image exists relative to project (user-provided image)
-  if pandoc.system.file_exists(image_url) then
+  if file_exists(image_url) then
     return image_url
   end
   
   -- Otherwise, resolve relative to extension directory
   local ext_dir = quarto.extension.directory()
   local ext_image_path = ext_dir .. "/images/" .. image_url:match("([^/]+)$")
-  if pandoc.system.file_exists(ext_image_path) then
+  if file_exists(ext_image_path) then
     return ext_image_path
   end
   
