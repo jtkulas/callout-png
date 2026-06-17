@@ -41,7 +41,7 @@ Content here...
 
 The default callout should display with the Pink Panther as an image and "Pinktacular Callout" as a title. The displayed font will mirror your document `mainfont` with the title presented in bold.
 
-![](images/default.JPG)
+![](https://github.com/jtkulas/callout-png/blob/main/_extensions/callout-png/images/default.JPG)
 
 ### Customization options 
 
