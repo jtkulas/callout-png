@@ -39,11 +39,11 @@ Content here...
 
 ```
 
-The default callout should display with the Pink Panther as an image and "Pinktacular Callout" as a title. The displayed font will mirror your document `mainfont` with the title presented in bold.
+The default callout should display with the Pink Panther as an image and "Pinktacular Callout" as a title. The displayed font will mirror your document `mainfont` with the title presented in bold:
 
 ![](https://github.com/jtkulas/callout-png/blob/main/_extensions/callout-png/images/default.JPG)
 
-### Customization options 
+### Customization options: 
 
 |Option   | Description           |  Default Value         |  Example  |
 |---------|-----------------------|------------------------|-----------|
@@ -52,16 +52,6 @@ The default callout should display with the Pink Panther as an image and "Pinkta
 |image    | Image filename & location | pink-panther.png | image="prettypic.png"   |
 |image-height | Vertical sizing of image | 4.8em  | image-height="2em"  |
 |header-vpad | Banner padding (vertical -- top & bottom) | 0em | header-vpad="1em"  |
-
-### Image Resolution
-
-When you specify an `image` parameter:
-
-1. **URLs** (e.g., `https://example.com/image.png`) — used directly
-2. **Project-relative paths** (e.g., `images/my-image.png`) — resolved from your document directory first
-3. **Bundled extension images** (e.g., `pink-panther.png`, `snoopylocal.png`) — automatically resolved from the extension's `images/` folder
-
-This means the default images work seamlessly for all users, whether rendering locally or in CI/CD pipelines. You can override bundled images by creating a file with the same name in your project's working directory.
 
 ## Examples
 
@@ -89,9 +79,9 @@ Two specifications of the 5 different attribute parameters:
 
 ```
 
-![](images/bigsnoop.JPG)
+![](https://github.com/jtkulas/callout-png/blob/main/_extensions/callout-png/images/bigsnoop.JPG)
 
-![](images/smallsnoop.JPG)
+![](https://github.com/jtkulas/callout-png/blob/main/_extensions/callout-png/images/smallsnoop.JPG)
 
 Here is the source code for a minimal example: [example.qmd](example.qmd).
 
