@@ -6,7 +6,7 @@ format: html
 
 `callout-png` facilitates ***image*** specification within (reasonable facsimiles of) Quarto callouts. 
 
-These image specifications supplant the [native & hacked bootstrap icon options](https://github.com/orgs/quarto-dev/discussions/3563) currently available with Quarto callouts and extends the icon customization beyond the default palette. <https://jtkulas.github.io/LiveStreams/slides/2026/6_16_26/#/custom-callouts> is an option for icon replacement. `callout-png` is similarly--minded, but is focused on **image** specification.
+These image specifications supplant the [native & hacked bootstrap icon options](https://github.com/orgs/quarto-dev/discussions/3563) currently available with Quarto callouts and extends the icon customization beyond the default palette. <https://github.com/coatless-quarto/custom-callout> is an option for icon replacement. `callout-png` is similarly--minded, but is focused on **image** specification.
 
 The extension is named `callout-png` because the .png format is known to support transparency (images with transparent backgrounds will return the most visually appealing results). Multiple image formats are permitted. Html format types should allow flexible image sourcing; pdf and typst formats will be more restrictive (e.g., some image formats such as .svg or .gif may fail).
 
