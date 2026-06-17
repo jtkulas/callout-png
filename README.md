@@ -47,7 +47,7 @@ The default callout should display with the Pink Panther as an image and "Pinkta
 
 |Option   | Description           |  Default Value         |  Example  |
 |---------|-----------------------|------------------------|-----------|
-|color    | Banner color (left--hand border will render 7% darker)^[not supported in typst or pdf]                 | #ff99ff       | color="#bada55"     |
+|color    | Banner color (left--hand border will render 7% darker)^[[not supported in typst or pdf]]                | #ff99ff       | color="#bada55"     |
 |title    | Content displayed to the right of image | Pinktacular Callout | title="My special callout"  |
 |image    | Image filename & location | pink-panther.png | image="prettypic.png"   |
 |image-height | Vertical sizing of image | 4.8em  | image-height="2em"  |
