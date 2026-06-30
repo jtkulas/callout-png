@@ -1,0 +1,22 @@
+{
+  "Callout PNG": {
+    "prefix": "callout-png",
+    "body": [
+      "::: {.callout-png title=\"${1:Pinktacular Callout}\" color=\"${2:#ff99ff}\" image=\"${3:pink-panther.png}\" image-height=\"${4:4.8em}\" header-vpad=\"${5:0em}\"}",
+      "",
+      "${6:Content goes here...}",
+      ":::"
+    ],
+    "description": "Insert a callout-png fenced div with all available options"
+  },
+  "Callout PNG Minimal": {
+    "prefix": "callout-png-min",
+    "body": [
+      "::: {.callout-png}",
+      "",
+      "${1:Content goes here...}",
+      ":::"
+    ],
+    "description": "Insert a minimal callout-png fenced div"
+  }
+}

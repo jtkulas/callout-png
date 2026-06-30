@@ -1,0 +1,35 @@
+# _schema.yml
+$schema: https://m.canouil.dev/quarto-wizard/assets/schema/v2/extension-schema.json
+
+attributes:
+  callout-png:
+    title:
+      type: string
+      description: "Title text displayed next to the image (bold in the banner)."
+      default: "Pinktacular Callout"
+      examples: ["My Special Callout"]
+
+    color:
+      type: string
+      description: "Background color of the banner (CSS color, hex preferred)."
+      default: "#ff99ff"
+      examples: ["#bada55", "lightblue"]
+      format: color   
+
+    image:
+      type: string
+      description: "Path or URL to the image (PNG recommended for transparency)."
+      default: "pink-panther.png"
+      examples: ["myimage.png", "https://example.com/image.png"]
+
+    image-height:
+      type: string
+      description: "Height of the image (e.g. 4.8em, 60px)."
+      default: "4.8em"
+      examples: ["2em", "80px"]
+
+    header-vpad:
+      type: string
+      description: "Vertical padding for the banner header."
+      default: "0em"
+      examples: ["1em", "0.5em"]
