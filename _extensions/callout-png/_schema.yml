@@ -11,7 +11,7 @@ attributes:
 
     color:
       type: string
-      description: "Background color of the banner (banner derived from hex specification)."
+      description: "Background color of the banner (left-border color prefers hex specification)."
       default: "#ff99ff"
       examples: ["#bada55", "#000000"]
       format: color   
